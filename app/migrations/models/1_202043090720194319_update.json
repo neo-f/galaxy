@@ -1,0 +1,10 @@
+{
+  "upgrade": [
+    "ALTER TABLE \"tag\" ADD \"created_at\" TIMESTAMP NOT NULL  DEFAULT CURRENT_TIMESTAMP",
+    "ALTER TABLE \"tag\" ADD \"updated_at\" TIMESTAMP NOT NULL  DEFAULT CURRENT_TIMESTAMP"
+  ],
+  "downgrade": [
+    "ALTER TABLE \"tag\" DROP COLUMN \"created_at\"",
+    "ALTER TABLE \"tag\" DROP COLUMN \"updated_at\""
+  ]
+}

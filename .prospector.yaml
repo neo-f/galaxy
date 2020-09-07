@@ -1,0 +1,18 @@
+strictness: medium
+test-warnings: true
+doc-warnings: false
+
+ignore-patterns:
+
+uses:
+
+pep8:
+  run: false
+
+pylint:
+  disable:
+    - unused-argument
+  max-line-length: 120
+
+pyflakes:
+    run: false
