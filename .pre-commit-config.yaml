@@ -2,6 +2,11 @@ exclude: 'migrations|.git|.tox'
 default_stages: [commit]
 fail_fast: true
 repos:
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.5.1  # Use the revision sha / tag you want to point at
+    hooks:
+      - id: isort
+
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:

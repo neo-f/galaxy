@@ -14,6 +14,10 @@ M = $(shell printf "\033[34;1m▶\033[0m")
 all: help
 
 
+.PHONY: run
+run: ; $(info $(M) run) @ ## 运行app
+	$Q uvicorn app.main:app --reload
+
 .PHONY: makemigrations
 makemigrations: ; $(info $(M) make migrations) @ ## 生成迁移脚本
 	$Q aerich migrate
@@ -21,6 +25,15 @@ makemigrations: ; $(info $(M) make migrations) @ ## 生成迁移脚本
 .PHONY: migrate
 migrate: ; $(info $(M) migrate) @ ## 执行迁移
 	$Q aerich upgrade
+
+.PHONY: lint
+lint: ; $(info $(M) prospector) @ ## 执行迁移
+	$Q prospector app
+
+.PHONY: test
+test: ; $(info $(M) test) @ ## 执行迁移
+	$Q pytest --cov
+
 
 .PHONY: help
 help: ; $(info $(M) 帮助:)	@ ## 显示帮助信息

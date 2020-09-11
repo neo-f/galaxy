@@ -1,27 +1,28 @@
 from typing import List
 
-from fastapi import Depends
+from fastapi import APIRouter, Depends
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
-from app import config
 from app.controllers import Status
-from app.models import Tag, TagDetail, TagCreate
-from app.server import app
+from app.models import Tag, TagCreate, TagDetail
+from app.utils.paginator import limit_offset_paginator
+
+router = APIRouter()
 
 
-@app.get("/tag", response_model=List[TagDetail])
-async def list_tags(paginator=Depends(config.pagination)):
+@router.get("/tag", response_model=List[TagDetail])
+async def list_tags(paginator=Depends(limit_offset_paginator)):
     qs = Tag.all().limit(paginator.limit).offset(paginator.offset)
     return await TagDetail.from_queryset(qs)
 
 
-@app.post("/tag", response_model=TagDetail)
+@router.post("/tag", response_model=TagDetail)
 async def create_tag(tag: TagCreate):
     tag = await Tag.create(**tag.dict(exclude_unset=True))
     return await TagDetail.from_tortoise_orm(tag)
 
 
-@app.put("/tag/{tag_id}", response_model=TagDetail, responses={404: {"model": HTTPNotFoundError}})
+@router.put("/tag/{tag_id}", response_model=TagDetail, responses={404: {"model": HTTPNotFoundError}})
 async def update_tag(tag_id: int, tag: TagCreate):
     obj = await Tag.get(pk=tag_id)
     obj = obj.update_from_dict(tag.dict(exclude_unset=True))
@@ -29,13 +30,13 @@ async def update_tag(tag_id: int, tag: TagCreate):
     return await TagDetail.from_tortoise_orm(obj)
 
 
-@app.get("/tag/{tag_id}", response_model=TagDetail, responses={404: {"model": HTTPNotFoundError}})
+@router.get("/tag/{tag_id}", response_model=TagDetail, responses={404: {"model": HTTPNotFoundError}})
 async def get_tag(tag_id: int):
     obj = await Tag.get(pk=tag_id)
     return await TagDetail.from_tortoise_orm(obj)
 
 
-@app.delete("/tag/{tag_id}", response_model=Status, responses={404: {"model": HTTPNotFoundError}})
+@router.delete("/tag/{tag_id}", response_model=Status, responses={404: {"model": HTTPNotFoundError}})
 async def delete_tag(tag_id: int):
     obj = await Tag.get(pk=tag_id)
     await obj.delete()

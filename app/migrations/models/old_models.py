@@ -1,4 +1,4 @@
-from tortoise import models, fields
+from tortoise import Model, fields, models
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 
@@ -8,7 +8,7 @@ class Tag(models.Model):
     updated_at = fields.DatetimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     class PydanticMeta:
         pass
@@ -16,7 +16,6 @@ class Tag(models.Model):
 
 TagDetail = pydantic_model_creator(Tag, name="Tag")
 TagCreate = pydantic_model_creator(Tag, exclude=("id", ...))
-from tortoise import Model, fields
 
 MAX_VERSION_LENGTH = 255
 

@@ -1,4 +1,4 @@
-from tortoise import models, fields
+from tortoise import fields, models
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 
@@ -11,8 +11,8 @@ class Tag(models.Model):
         return str(self.name)
 
     class PydanticMeta:
-        pass
+        ...
 
 
 TagDetail = pydantic_model_creator(Tag, name="Tag")
-TagCreate = pydantic_model_creator(Tag, exclude=("id", ...))
+TagCreate = pydantic_model_creator(Tag, exclude=("id", "created_at", "updated_at", ...))

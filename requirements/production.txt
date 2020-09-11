@@ -1,15 +1,18 @@
 # Core
 # ------------------------------------------------------------------------------
-fastapi==0.61.1
-pydantic==1.6.1
-uvicorn==0.11.8
-orjson==3.3.1
+fastapi==0.61.1                   # https://github.com/tiangolo/fastapi
+pydantic==1.6.1                   # https://github.com/samuelcolvin/pydantic
+orjson==3.3.1                     # https://github.com/ijl/orjson
+requests==2.24.0                  # https://github.com/psf/requests
+uvicorn==0.11.8                   # https://github.com/encode/uvicorn
+gunicorn==20.0.4                  # https://github.com/benoitc/gunicorn
 
 # Database
-# ------------------------------------------------------------------------------
-tortoise-orm==0.16.14
-aerich==0.2.2
+# ---------------------           ---------------------------------------------------------
+asyncpg==0.21.0                   # https://github.com/MagicStack/asyncpg
+tortoise-orm==0.16.14             # https://github.com/tortoise/tortoise-orm
+aerich==0.2.2                     # https://github.com/long2ice/aerich
 
 # Sentry
-# ------------------------------------------------------------------------------
-sentry-sdk==0.17.3
+# ---------------------           ---------------------------------------------------------
+sentry-sdk==0.17.3                # https://github.com/getsentry/sentry-python
