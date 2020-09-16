@@ -7,5 +7,4 @@ class LimitOffsetPagination(pydantic.BaseModel):
 
 
 async def limit_offset_paginator(limit: int = 10, offset: int = 0):
-    print(limit, offset)
     return LimitOffsetPagination(limit=limit, offset=offset)

@@ -13,13 +13,18 @@ services:
         depends_on:
             - postgres
         volumes:
-            - .:/app
+            - .:/work
         environment:
             - MODE=dev
             - POSTGRES_DSN=postgres://postgres:galaxy@postgres:5432/galaxy
             - SENTRY_DSN=https://4191639452fc45deb6259e1d1992a9a4@o418626.ingest.sentry.io/5423877
         ports:
             - "8000:8000"
+        command:
+            - uvicorn
+            - app.main:app
+            - --reload
+            - --host=0.0.0.0
 
     postgres:
         image: postgres:13-alpine

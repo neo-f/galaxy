@@ -21,7 +21,7 @@ app.include_router(tag.router, tags=["tag"])
 
 logging.root.setLevel("INFO")
 
-if sys.argv[0].endswith("uvicorn"):  # pragma: no cover
+if sys.argv[0] != "pytest":  # pragma: no cover
     register_tortoise(
         app,
         config=config.db_config,
