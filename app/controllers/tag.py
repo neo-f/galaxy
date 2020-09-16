@@ -1,19 +1,17 @@
-from typing import List
-
 from fastapi import APIRouter, Depends
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
 from app.controllers import Status
 from app.models import Tag, TagCreate, TagDetail
-from app.utils.paginator import limit_offset_paginator
+from app.utils.paginator import Pagination, PaginationResult
 
 router = APIRouter()
 
 
-@router.get("/tag", response_model=List[TagDetail])
-async def list_tags(paginator=Depends(limit_offset_paginator)):
-    qs = Tag.all().limit(paginator.limit).offset(paginator.offset)
-    return await TagDetail.from_queryset(qs)
+@router.get("/tag", response_model=PaginationResult[TagDetail])
+async def list_tags(paginator=Depends(Pagination)):
+    qs = Tag.all()
+    return await paginator.paginate(qs)
 
 
 @router.post("/tag", response_model=TagDetail)

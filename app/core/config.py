@@ -1,8 +1,6 @@
 from pydantic import AnyHttpUrl, BaseSettings, PostgresDsn
 from tortoise import generate_config
 
-from app.utils.paginator import limit_offset_paginator
-
 
 class Settings(BaseSettings):
     mode: str = "dev"
@@ -14,4 +12,3 @@ class Settings(BaseSettings):
 settings = Settings()
 
 db_config = generate_config(db_url=settings.postgres_dsn, app_modules={"models": ["app.models", "aerich.models"]})
-pagination = limit_offset_paginator
